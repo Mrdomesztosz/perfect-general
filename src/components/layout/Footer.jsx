@@ -1,15 +1,16 @@
 import React from 'react';
 import Link from 'next/link';
-import { Phone, Mail, MapPin, Facebook, Instagram } from 'lucide-react';
+import { Phone, Mail, MapPin } from 'lucide-react';
 
 const Footer = () => {
   return (
+    // JAVÍTÁS: Kivettük a '-mt-1'-et, de a 'relative z-10' maradhat
     <footer className="bg-brand-black text-white pt-20 pb-10">
       <div className="container mx-auto px-6">
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           
-          {/* 1. Oszlop: Brand */}
+          {/* 1. Oszlop */}
           <div>
             <div className="text-3xl font-bold tracking-tighter mb-6">
               <span className="text-white">PERFECT</span>
@@ -21,7 +22,7 @@ const Footer = () => {
             </p>
           </div>
 
-          {/* 2. Oszlop: Gyorslinkek */}
+          {/* 2. Oszlop */}
           <div>
             <h4 className="text-xl font-bold mb-6">Navigáció</h4>
             <ul className="space-y-4 text-gray-400">
@@ -32,7 +33,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* 3. Oszlop: Szolgáltatások */}
+          {/* 3. Oszlop */}
           <div>
             <h4 className="text-xl font-bold mb-6">Szakterületek</h4>
             <ul className="space-y-4 text-gray-400">
@@ -43,7 +44,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* 4. Oszlop: Kapcsolat */}
+          {/* 4. Oszlop */}
           <div id="kapcsolat">
             <h4 className="text-xl font-bold mb-6">Kapcsolat</h4>
             <ul className="space-y-4">
@@ -67,8 +68,8 @@ const Footer = () => {
         </div>
 
         {/* Alsó sáv */}
-        <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-gray-500 text-sm">
-          <p>&copy; 2025 Perfect Generál Kft. Minden jog fenntartva.</p>
+        <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center text-gray-500 text-sm">
+          <p>&copy; 2024 Perfect Generál Kft. Minden jog fenntartva.</p>
           <p className="mt-2 md:mt-0">Készítette: WebDesign</p>
         </div>
 

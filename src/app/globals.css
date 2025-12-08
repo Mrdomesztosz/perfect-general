@@ -2,6 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Töröljük a Next.js alapértelmezett változóit, amik a csíkokat okozhatják */
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 255, 255, 255;
+  --background-end-rgb: 255, 255, 255;
+}
+
 html {
   scroll-behavior: smooth;
+}
+
+body {
+  /* Kényszerítjük a fehér hátteret, és letiltunk minden háttérképet/gradienst */
+  color: rgb(var(--foreground-rgb));
+  background-color: #ffffff !important;
+  background-image: none !important;
+}
+
+/* Biztonsági lépés: ha a 'body::before' vagy 'after' tartalmazná a mintát */
+body::before,
+body::after {
+  display: none !important;
+  content: none !important;
 }
