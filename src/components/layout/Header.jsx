@@ -18,17 +18,23 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // JAVÍTOTT LOGIKA: Nem a szélességet nézzük, hanem az eszköz típusát
   const handlePhoneClick = (e) => {
-    if (typeof window !== 'undefined' && window.innerWidth > 768) {
-      e.preventDefault();
-      setIsModalOpen(true);
+    // Ellenőrizzük, hogy asztali környezet-e (van-e egér/hover képesség)
+    // VAGY ha széles a képernyő (biztonsági tartalék)
+    const isDesktop = window.matchMedia('(hover: hover) and (pointer: fine)').matches || window.innerWidth > 1024;
+
+    if (typeof window !== 'undefined' && isDesktop) {
+      e.preventDefault(); // Megállítjuk a tárcsázást
+      setIsModalOpen(true); // Kinyitjuk az ablakot
     }
+    // Ha érintőképernyős (mobil), akkor nem lépünk be az if-be, és engedi a tárcsázást.
   };
 
   const navLinks = [
     { name: 'Szolgáltatások', href: '#szolgaltatasok' },
     { name: 'Referenciák', href: '#referenciak' },
-    { name: 'Eladó Ingatlanok', href: '#ingatlanok' },
+    { name: 'Eladó Házak', href: '#ingatlanok' },
     { name: 'Rólunk', href: '#rolunk' },
   ];
 
@@ -53,7 +59,6 @@ const Header = () => {
           </Link>
 
           {/* ASZTALI MENÜ */}
-          {/* 'md:flex' helyett 'lg:flex'-re váltunk, hogy a menü hamarabb tűnjön el és váltson burgerre, ha nagyon szűk a hely */}
           <nav className="hidden lg:flex items-center space-x-6 xl:space-x-8">
             {navLinks.map((link) => (
               <Link 
@@ -67,29 +72,18 @@ const Header = () => {
               </Link>
             ))}
             
-            {/* A RESZPONZÍV GOMB */}
             <a 
               href="tel:+36301234567"
-              onClick={handlePhoneClick}
+              onClick={handlePhoneClick} // Itt már jó volt
               className="flex items-center gap-2 bg-brand hover:bg-brand-dark text-white px-4 py-2.5 rounded-xl font-bold transition-all shadow-lg hover:shadow-brand/50 cursor-pointer shrink-0"
             >
               <Phone size={18} />
-              
-              {/* TRÜKK: Két span elem van, de mindig csak az egyik látszik! */}
-              
-              {/* 1. Verzió: Csak Extra Nagy képernyőn (XL) látszik a szám */}
-              <span className="hidden xl:block whitespace-nowrap">
-                +36 30 123 4567
-              </span>
-
-              {/* 2. Verzió: Normál laptopon/osztott képernyőn (LG-XL között) csak a 'Hívás' szó látszik */}
-              <span className="block xl:hidden">
-                Hívás
-              </span>
+              <span className="hidden xl:block whitespace-nowrap">+36 30 123 4567</span>
+              <span className="block xl:hidden">Hívás</span>
             </a>
           </nav>
 
-          {/* MOBIL MENÜ GOMB (Most már LG alatt jelenik meg, nem MD alatt) */}
+          {/* MOBIL MENÜ NYITÓ */}
           <button 
             className="lg:hidden text-brand"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -98,7 +92,7 @@ const Header = () => {
           </button>
         </div>
 
-        {/* MOBIL MENÜ TARTALOM */}
+        {/* MOBIL / BURGER MENÜ TARTALOM */}
         {isMobileMenuOpen && (
           <div className="lg:hidden absolute top-full left-0 w-full bg-white shadow-xl border-t border-gray-100 p-6 flex flex-col gap-4">
             {navLinks.map((link) => (
@@ -111,9 +105,12 @@ const Header = () => {
                 {link.name}
               </Link>
             ))}
+            
+            {/* JAVÍTÁS: Itt hiányzott eddig a 'handlePhoneClick'! */}
             <a 
               href="tel:+36301234567"
-              className="flex justify-center items-center gap-2 bg-brand text-white py-3 rounded-xl font-bold mt-2"
+              onClick={handlePhoneClick} // <--- MOST MÁR ITT IS FIGYELÜNK
+              className="flex justify-center items-center gap-2 bg-brand text-white py-3 rounded-xl font-bold mt-2 cursor-pointer"
             >
               <Phone size={20} />
               Hívás Most
