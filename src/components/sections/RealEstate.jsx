@@ -1,30 +1,39 @@
 'use client';
 
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { houses } from '@/data/housesData';
 import { formatCurrency } from '@/utils/formatCurrency';
 import { MapPin, Maximize, Bed, Phone } from 'lucide-react';
 import ContactModal from '@/components/ui/ContactModal';
+import { sendGAEvent } from '@next/third-parties/google'; // <--- 1. IMPORT
 
 const RealEstate = () => {
-    
-    const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const handlePhoneClick = (e) => {
-    if (typeof window !== 'undefined' && window.innerWidth > 768) {
-      e.preventDefault(); // Megállítja a tárcsázást
-      setIsModalOpen(true);
+  // 2. Módosított függvény: várja a ház nevét is!
+  const handlePhoneClick = (e, houseTitle) => {
+    
+    // MÉRÉS: Elküldjük a Google-nek, hogy melyik ház érdekelte
+    sendGAEvent('event', 'real_estate_interest', { property: houseTitle });
+
+    // Okos platform ellenőrzés (ugyanaz, mint a Headerben)
+    const isDesktop = window.matchMedia('(hover: hover) and (pointer: fine)').matches || window.innerWidth > 1024;
+
+    if (typeof window !== 'undefined' && isDesktop) {
+      e.preventDefault(); // Megállítjuk a tárcsázást
+      setIsModalOpen(true); // Kinyitjuk az ablakot
     }
   };
-    
+
   return (
     <section id="ingatlanok" className="py-20 bg-gray-50">
-        
-        <ContactModal 
+      
+      <ContactModal 
         isOpen={isModalOpen} 
         onClose={() => setIsModalOpen(false)} 
         title="Ingatlan Érdeklődés"
       />
+
       <div className="container mx-auto px-6">
         
         <div className="text-center mb-16">
@@ -95,8 +104,9 @@ const RealEstate = () => {
                 {house.status === 'active' ? (
                   <a 
                     href="tel:+36301234567"
-                    onClick={handlePhoneClick}
-                    className="flex items-center justify-center gap-2 w-full bg-brand-black text-white py-3 rounded-xl font-bold hover:bg-brand transition-colors"
+                    // 3. JAVÍTÁS: Átadjuk a 'house.title'-t a függvénynek
+                    onClick={(e) => handlePhoneClick(e, house.title)}
+                    className="flex items-center justify-center gap-2 w-full bg-brand-black text-white py-3 rounded-xl font-bold hover:bg-brand transition-colors cursor-pointer"
                   >
                     <Phone size={18} />
                     Érdekel

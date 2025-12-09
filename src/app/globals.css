@@ -14,7 +14,6 @@ html {
 
 body {
   color: rgb(var(--foreground-rgb));
-  /* ITT A TRÜKK: Fehér (#ffffff) helyett legyen a márka feketéje vagy sima fekete */
   background-color: #ffffff !important; 
   background-image: none !important;
 }

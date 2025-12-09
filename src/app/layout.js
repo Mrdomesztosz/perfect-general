@@ -1,5 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { GoogleAnalytics } from '@next/third-parties/google'; // <--- 1. IMPORT
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,11 +20,17 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    // 2. ÁTÍRVA: "en" -> "hu" (hogy a Google tudja, ez magyar oldal)
+    <html lang="hu">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
+        
+        {/* 3. IDE JÖN A SAJÁT KÓDOD */}
+        {/* Cseréld le a G-XXXXXXXXXX részt a sajátodra! */}
+        <GoogleAnalytics gaId="G-XP061FGNTG" />
+        
       </body>
     </html>
   );
