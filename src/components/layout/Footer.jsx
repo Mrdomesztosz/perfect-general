@@ -18,7 +18,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-brand-black text-white pt-20 pb-10 relative z-10">
+    <footer className="bg-brand-black text-white pt-20 pb-10 ring-1 ring-brand-black">
       
       {/* <--- BEILLESZTJÜK A MODALT (Láthatatlan, amíg nem kattintanak) */}
       <ContactModal 

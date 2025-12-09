@@ -13,7 +13,7 @@ const About = () => {
   return (
     
     // A 'relative z-10' marad, hogy a fekete réteg felül legyen.
-    <section id="rolunk" className="py-20 bg-brand-black text-white overflow-hidden">
+    <section id="rolunk" className="py-20 bg-brand-black text-white overflow-hidden ring-1 ring-brand-black">
       <div className="container mx-auto px-6">
         
         <div className="flex flex-col lg:flex-row items-center gap-16">
