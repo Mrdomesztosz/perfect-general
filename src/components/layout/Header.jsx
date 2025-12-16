@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Phone, Menu, X } from 'lucide-react';
 import ContactModal from '@/components/ui/ContactModal';
-import { sendGAEvent } from '@next/third-parties/google'; // <--- 1. ÚJ IMPORT
+
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -22,8 +22,7 @@ const Header = () => {
   // JAVÍTOTT LOGIKA: Nem a szélességet nézzük, hanem az eszköz típusát
   const handlePhoneClick = (e) => {
     
-    // <--- 2. ITT KÜLDJÜK AZ ADATOT A GOOGLE-NEK
-    sendGAEvent('event', 'phone_click', { value: 'header_button' });
+  
 
     // Ellenőrizzük, hogy asztali környezet-e (van-e egér/hover képesség)
     // VAGY ha széles a képernyő (biztonsági tartalék)

@@ -5,7 +5,7 @@ import { houses } from '@/data/housesData';
 import { formatCurrency } from '@/utils/formatCurrency';
 import { MapPin, Maximize, Bed, Phone } from 'lucide-react';
 import ContactModal from '@/components/ui/ContactModal';
-import { sendGAEvent } from '@next/third-parties/google'; // <--- 1. IMPORT
+
 
 const RealEstate = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -13,8 +13,6 @@ const RealEstate = () => {
   // 2. Módosított függvény: várja a ház nevét is!
   const handlePhoneClick = (e, houseTitle) => {
     
-    // MÉRÉS: Elküldjük a Google-nek, hogy melyik ház érdekelte
-    sendGAEvent('event', 'real_estate_interest', { property: houseTitle });
 
     // Okos platform ellenőrzés (ugyanaz, mint a Headerben)
     const isDesktop = window.matchMedia('(hover: hover) and (pointer: fine)').matches || window.innerWidth > 1024;

@@ -1,6 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { GoogleAnalytics } from '@next/third-parties/google'; // <--- 1. IMPORT
+// 1. ÚJ IMPORT: Vercel Analytics
+import { Analytics } from "@vercel/analytics/react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,16 +21,15 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    // 2. ÁTÍRVA: "en" -> "hu" (hogy a Google tudja, ez magyar oldal)
     <html lang="hu">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
         
-        {/* 3. IDE JÖN A SAJÁT KÓDOD */}
-        {/* Cseréld le a G-XXXXXXXXXX részt a sajátodra! */}
-        <GoogleAnalytics gaId="G-XP061FGNTG" />
+        {/* 2. IDE TESSZÜK BE A VERCEL MÉRŐKÓDJÁT */}
+        {/* Ez automatikusan működik, nem kell neki ID */}
+        <Analytics />
         
       </body>
     </html>
