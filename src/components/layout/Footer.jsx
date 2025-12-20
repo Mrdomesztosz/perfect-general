@@ -1,13 +1,13 @@
-'use client'; // <--- FONTOS: Mostantól ez kliens komponens
+'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { Phone, Mail, MapPin } from 'lucide-react';
-import ContactModal from '@/components/ui/ContactModal'; // <--- Importáljuk a Modalt
+import ContactModal from '@/components/ui/ContactModal';
 
 const Footer = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Ugyanaz a javított logika, mint a Headerben
   const handlePhoneClick = (e) => {
     const isDesktop = window.matchMedia('(hover: hover) and (pointer: fine)').matches || window.innerWidth > 1024;
     
@@ -18,9 +18,8 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-brand-black text-white pt-20 pb-10 ring-1 ring-brand-black">
+    <footer className="bg-brand-black text-white pt-24 pb-10 ring-1 ring-brand-black">
       
-      {/* <--- BEILLESZTJÜK A MODALT (Láthatatlan, amíg nem kattintanak) */}
       <ContactModal 
         isOpen={isModalOpen} 
         onClose={() => setIsModalOpen(false)} 
@@ -31,12 +30,25 @@ const Footer = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           
-          {/* 1. Oszlop */}
+          {/* 1. Oszlop: LOGÓ ÉS LEÍRÁS */}
           <div>
-            <div className="text-3xl font-bold tracking-tighter mb-6">
-              <span className="text-white">PERFECT</span>
-              <span className="text-brand">GENERÁL</span>
+            <div className="mb-8">
+              {/* ÓRIÁS LOGÓ */}
+              <div className="relative w-32 h-32 mb-6 bg-white rounded-full overflow-hidden shadow-xl">
+                <Image 
+                  src="/ujlogo.jpg" // <--- ITT A CSERE
+                  alt="Perfect Generál Logo" 
+                  fill 
+                  className="object-contain scale-110 -ml-0 -mt-1 lg:-ml-0 lg:-mt-1" 
+                />
+              </div>
+              {/* SZÖVEG ALATTA */}
+              <div className="text-3xl font-bold tracking-normal leading-none">
+                <span className="block text-white">PERFECT</span>
+                <span className="block text-brand">GENERÁL</span>
+              </div>
             </div>
+
             <p className="text-gray-400 leading-relaxed mb-6">
               Megbízható partner a felújításban és az otthonteremtésben. 
               Minőség, határidőre.
@@ -75,11 +87,9 @@ const Footer = () => {
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="text-brand shrink-0" />
-                
-                {/* JAVÍTÁS: Rátettük a kattintás figyelőt */}
                 <a 
                   href="tel:+36301234567" 
-                  onClick={handlePhoneClick} // <--- OKOSÍTÁS
+                  onClick={handlePhoneClick}
                   className="text-gray-400 hover:text-white transition-colors cursor-pointer"
                 >
                   +36 30 123 4567
