@@ -29,29 +29,28 @@ const Footer = () => {
       <div className="container mx-auto px-6">
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-          
+
           {/* 1. Oszlop: LOGÓ ÉS LEÍRÁS */}
           <div>
             <div className="mb-8">
-              {/* ÓRIÁS LOGÓ */}
               <div className="relative w-32 h-32 mb-6 bg-white rounded-full overflow-hidden shadow-xl">
-                <Image 
-                  src="/ujlogo.jpg" // <--- ITT A CSERE
+                 <Image 
+                  src="/ujlogo.jpg" 
                   alt="Perfect Generál Logo" 
                   fill 
                   className="object-contain scale-110 -ml-0 -mt-1 lg:-ml-0 lg:-mt-1" 
                 />
               </div>
-              {/* SZÖVEG ALATTA */}
-              <div className="text-3xl font-bold tracking-normal leading-none">
+              <div className="text-3xl font-bold tracking-tighter leading-none">
                 <span className="block text-white">PERFECT</span>
                 <span className="block text-brand">GENERÁL</span>
               </div>
             </div>
 
             <p className="text-gray-400 leading-relaxed mb-6">
-              Megbízható partner a felújításban és az otthonteremtésben. 
-              Minőség, határidőre.
+              {/* FRISSÍTETT SZÖVEG: */}
+              Festő egyéni vállalkozásból nőttünk ingatlanfejlesztő céggé. 
+              Saját beruházású társasházak és sorházak Derecskén és Hajdúszoboszlón.
             </p>
           </div>
 
@@ -78,7 +77,7 @@ const Footer = () => {
           </div>
 
           {/* 4. Oszlop: Kapcsolat */}
-          <div id="kapcsolat">
+          <div id="kapcsolat" className="scroll-mt-32">
             <h4 className="text-xl font-bold mb-6">Kapcsolat</h4>
             <ul className="space-y-4">
               <li className="flex items-start gap-3">

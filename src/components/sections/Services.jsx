@@ -1,49 +1,62 @@
+'use client';
+
 import React from 'react';
-import { services } from '@/data/servicesData';
+import { PaintRoller, Home, ThermometerSun, Users } from 'lucide-react';
 
 const Services = () => {
+  const features = [
+    {
+      icon: <PaintRoller size={40} />,
+      title: "Festés Mesterfokon",
+      description: "A cég szíve és eredete. 1994 óta foglalkozunk festéssel, így házaink végső felületképzése, esztétikája garantáltan prémium minőségű."
+    },
+    {
+      icon: <Home size={40} />,
+      title: "Saját Ingatlanfejlesztés",
+      description: "Nem másnak építünk, hanem saját beruházásban hozunk létre értékálló otthonokat. Derecskén 4 társasház, jelenleg Hajdúszoboszlón sorházak épülnek."
+    },
+    {
+      icon: <ThermometerSun size={40} />,
+      title: "Korszerű Gépészet",
+      description: "Megbízható szakági partnereinkkel a legmodernebb hőszivattyús rendszereket és padlófűtést építjük be az alacsony rezsi érdekében."
+    },
+    {
+      icon: <Users size={40} />,
+      title: "Koordinált Kivitelezés",
+      description: "A burkolástól a gépészetig minden munkafolyamatot összeszokott alvállalkozói csapatunk végez, a mi szigorú szakmai felügyeletünk mellett."
+    }
+  ];
+
   return (
-    <section id="szolgaltatasok" className="py-20 bg-gray-50">
+    // JAVÍTÁS: 
+    // 1. 'min-h-screen': A szekció minimum akkora, mint a képernyő.
+    // 2. 'flex flex-col justify-center': A tartalmat függőlegesen középre igazítjuk.
+    <section 
+      id="szolgaltatasok" 
+      className="py-20 bg-white scroll-mt-14 lg:scroll-mt-32 min-h-screen flex flex-col justify-center"
+    >
       <div className="container mx-auto px-6">
         
-        {/* Címsor */}
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-brand-black mb-4">Szolgáltatásaink</h2>
+          <h2 className="text-4xl font-bold text-brand-black mb-4">A Szakértelem Találkozása</h2>
           <div className="w-24 h-1 bg-brand mx-auto rounded-full"></div>
           <p className="mt-4 text-gray-600 max-w-2xl mx-auto">
-            Minden, ami egy tökéletes otthonhoz kell. Szakértelem, garancia és minőségi anyagok egy helyen.
+            A Perfect Generál Kft. több mint egy kivitelező. A festő szakma precizitását ötvözzük a modern ingatlanfejlesztéssel.
           </p>
         </div>
 
-        {/* Kártyák Rácsos Elrendezése */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {services.map((service) => {
-            const Icon = service.icon;
-            
-            return (
-              <div 
-                key={service.id}
-                className={`group bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 hover:-translate-y-2 ${
-                  service.highlight ? 'ring-2 ring-brand/20' : ''
-                }`}
-              >
-                {/* Ikon */}
-                <div className={`w-14 h-14 rounded-xl flex items-center justify-center mb-6 transition-colors ${
-                  service.highlight ? 'bg-brand text-white' : 'bg-gray-100 text-brand group-hover:bg-brand group-hover:text-white'
-                }`}>
-                  <Icon size={28} />
-                </div>
-
-                {/* Szöveg */}
-                <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-brand transition-colors">
-                  {service.title}
-                </h3>
-                <p className="text-gray-600 leading-relaxed">
-                  {service.description}
-                </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {features.map((feature, index) => (
+            <div key={index} className="bg-gray-50 p-8 rounded-2xl hover:shadow-xl transition-all duration-300 group border border-gray-100">
+              <div className="mb-6 text-brand group-hover:scale-110 transition-transform duration-300">
+                {feature.icon}
               </div>
-            );
-          })}
+              <h3 className="text-xl font-bold text-gray-800 mb-3">{feature.title}</h3>
+              <p className="text-gray-600 leading-relaxed">
+                {feature.description}
+              </p>
+            </div>
+          ))}
         </div>
 
       </div>

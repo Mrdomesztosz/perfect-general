@@ -24,7 +24,7 @@ const RealEstate = () => {
   };
 
   return (
-    <section id="ingatlanok" className="py-20 bg-gray-50">
+    <section id="ingatlanok" className="py-20 bg-gray-50 scroll-mt-14 lg:scroll-mt-32">
       
       <ContactModal 
         isOpen={isModalOpen} 

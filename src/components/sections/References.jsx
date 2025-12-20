@@ -4,7 +4,7 @@ import BeforeAfter from '@/components/ui/BeforeAfter';
 
 const References = () => {
   return (
-    <section id="referenciak" className="py-20 bg-brand-black text-white ring-1 ring-brand-black">
+    <section id="referenciak" className="py-20 bg-brand-black text-white ring-1 ring-brand-black scroll-mt-14 lg:scroll-mt-32">
       <div className="container mx-auto px-6">
         
         <div className="text-center mb-16">
