@@ -30,7 +30,7 @@ const Header = () => {
   const navLinks = [
     { name: 'Szolgáltatások', href: '#szolgaltatasok' },
     { name: 'Referenciák', href: '#referenciak' },
-    { name: 'Eladó Házak', href: '#ingatlanok' },
+    { name: 'Eladó Ingatlanok', href: '#ingatlanok' },
     { name: 'Rólunk', href: '#rolunk' },
   ];
 
