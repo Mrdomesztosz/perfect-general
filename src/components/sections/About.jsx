@@ -6,11 +6,16 @@ import { CheckCircle } from 'lucide-react';
 
 const About = () => {
   return (
-    <section id="rolunk" className="py-20 bg-brand-black text-white relative overflow-hidden scroll-mt-14 lg:scroll-mt-32">
-      {/* Díszítő elem a háttérben */}
-      <div className="absolute top-0 right-0 w-1/3 h-full bg-brand/5 skew-x-12 transform origin-top pointer-events-none" />
+    <section 
+      id="rolunk" 
+      // A fugázás és a pozicionálás beállításai
+      className="py-20 relative overflow-hidden scroll-mt-14 lg:scroll-mt-32 -mt-1 border-y-2 border-brand-black bg-brand-black"
+    >
+      
+      {/* Biztonsági fekete háttér */}
+      <div className="absolute inset-0 bg-brand-black z-0"></div>
 
-      <div className="container mx-auto px-6 relative z-10">
+      <div className="container mx-auto px-6 relative z-20 text-white">
         <div className="flex flex-col lg:flex-row items-center gap-16">
           
           {/* Szöveges rész */}
@@ -31,6 +36,7 @@ const About = () => {
               <p>
                 Mára a tevékenységi körünk kiegészült a <strong className="text-white">saját tulajdonú ingatlanok építésével és értékesítésével</strong>. Büszkék vagyunk rá, hogy Derecskén már 4 társasházat építettünk fel és adtunk át sikeresen új tulajdonosaiknak.
               </p>
+              {/* Idézet doboz */}
               <div className="bg-gray-800/50 p-4 rounded-xl border-l-4 border-brand mt-4">
                 <p className="text-white font-medium italic">
                   "Jelenleg Hajdúszoboszlón dolgozunk legújabb projektünkön, egy modern, 3 lakásos sorház kivitelezésén."
@@ -48,11 +54,9 @@ const About = () => {
             </div>
           </div>
 
-          {/* Képes rész - ITT A CSERE */}
-          <div className="lg:w-1/2 relative">
+          {/* Képes rész */}
+          <div className="lg:w-1/2 relative w-full">
             <div className="relative h-[500px] w-full rounded-2xl overflow-hidden shadow-2xl ring-4 ring-white/10">
-              
-              {/* Most már a helyi 'hatter.jpg' fájlt tölti be */}
               <Image 
                 src="/hatter.jpg" 
                 alt="Perfect Generál Munka közben" 

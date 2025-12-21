@@ -21,27 +21,24 @@ const Hero = () => {
       {/* Tartalom */}
       <div className="relative z-10 container mx-auto px-6 text-center text-white mt-16">
         
-        {/* --- ELEGÁNS, VISSZAFOGOTT VERZIÓ --- */}
-        {/* bg-white/10: Csak 10%-os fehér háttér (alig látszik)
-            border-white/20: Nagyon halvány keret
-            text-gray-200: Nem vakító fehér, hanem törtfehér szöveg
-        */}
+        {/* Elegáns címke */}
         <div className="inline-block px-5 py-2 rounded-full mb-8 border border-white/20 bg-white/5 backdrop-blur-sm">
           <span className="text-gray-100 uppercase tracking-widest text-xs md:text-sm font-medium">
             1994 óta az építőiparban
           </span>
         </div>
-        {/* --- VÉGE --- */}
 
         <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 tracking-tight leading-tight">
           A Szakértelem <br />
           <span className="text-brand">Otthont Teremt</span>
         </h1>
         
-        <p className="text-lg md:text-2xl mb-10 text-gray-200 max-w-3xl mx-auto font-light">
-          Saját tulajdonú, új építésű ingatlanok közvetlenül a kivitelezőtől. 
-          A festőmester precizitásával építjük jövőjét Derecskétől Hajdúszoboszlóig.
+        {/* --- ITT A MÓDOSÍTOTT SZÖVEG --- */}
+        <p className="text-lg md:text-2xl mb-10 text-gray-200 max-w-4xl mx-auto font-light">
+          Saját tulajdonú ingatlanfejlesztés Hajdú-Biharban, professzionális festés országosan. 
+          Derecskei központtal, de határok nélkül dolgozunk: Budapesttől a Balatonig, bárhol, ahol a minőség számít.
         </p>
+        {/* --- MÓDOSÍTÁS VÉGE --- */}
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <a 

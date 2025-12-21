@@ -16,6 +16,7 @@ body {
   color: rgb(var(--foreground-rgb));
   background-color: #ffffff !important; 
   background-image: none !important;
+  overflow-x: hidden;
 }
 
 /* Biztonsági tisztítás */
