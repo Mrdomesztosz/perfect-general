@@ -37,6 +37,7 @@ const RealEstate = () => {
         "/ingatlanok/derecske_tarsashaz1/Derecske_szoba2.jpg",
         "/ingatlanok/derecske_tarsashaz1/Derecske_szoba3.jpg",
         "/ingatlanok/derecske_tarsashaz1/Derecske_WC.jpg",
+ 
       ],
       description: `
         Eladó Derecskén egy első emeleti, 77 m²-es, nappali + 3 szobás új építésű lakás.
@@ -61,16 +62,51 @@ const RealEstate = () => {
         Lakáshitel és CSOK Plusz igénylésére is alkalmas.
       `
     },
+    // --- MÁSODIK HÁZ: HAJDÚSZOBOSZLÓ ---
     {
       id: 2,
-      status: "ELKELT",
-      statusColor: "bg-gray-500",
-      title: "Felújított Belvárosi Lakás",
-      price: "Eladva",
-      location: "Debrecen Belváros",
-      specs: { area: "68 m²", rooms: "2 szoba", extras: ["Erkélyes", "Amerikai konyha"] },
-      images: ["/haz.jpg"], 
-      description: "Ez az ingatlan már sikeresen értékesítésre került."
+      status: "ELADÓ", // Most már ez is eladó
+      statusColor: "bg-brand",
+      title: "Modern Sorházi Otthon",
+      price: "99 500 000 Ft",
+      location: "Hajdúszoboszló, Központ",
+      specs: { 
+        area: "103 m²", // Hasznos alapterület
+        rooms: "Nappali + 2 szoba", 
+        extras: ["Új építés (2025)", "Hőszivattyú", "Garázs", "Saját kert"] 
+      },
+      // KÉPEK ELÉRÉSE (A mappa neve: hajduszoboszlo_sorhaz)
+      // Ide másold majd be a képeket 1.jpg, 2.jpg... néven
+      images: [
+        "/ingatlanok/hajduszoboszlo_sorhaz1/haz1.jpg",
+        "/ingatlanok/hajduszoboszlo_sorhaz1/haz2.jpg",
+        "/ingatlanok/hajduszoboszlo_sorhaz1/haz3.jpg",
+        "/ingatlanok/hajduszoboszlo_sorhaz1/haz4.jpg",
+        "/ingatlanok/hajduszoboszlo_sorhaz1/haz5.jpg", 
+      ], 
+      description: `
+        Hajdúszoboszló szívében, ugyanakkor nyugodt, csendes környezetben kínálunk eladásra egy új építésű, prémium kivitelezésű sorházi otthont.
+        
+        A 2025-ös átadású ingatlan modern technológiával, Ytong téglából épül, betoncserepes tetővel és 3 rétegű hővisszaverős nyílászárókkal.
+
+        Méretek és Elosztás:
+        - Teljes hasznos alapterület: 102,96 m²
+        - Ebből lakótér: 80,13 m²
+        - Amerikai konyhás nappali
+        - 2 hálószoba
+        - 2 fürdőszoba/WC
+        - Saját garázs
+        - Saját kert
+
+        Műszaki tartalom és Extrák:
+        - Energetikai besorolás: A+ (Fenntartható otthon)
+        - Fűtés: Hőszivattyús rendszer + Padlófűtés
+        - Hűtés: Saját split klíma (hűtő-fűtő)
+        - Parkolás: Garázsban
+        - Kilátás: Udvari
+        
+        Kiváló ár-érték arány, rugalmas fizetési feltételek. Ne maradjon le róla!
+      `
     }
   ];
 
@@ -132,6 +168,7 @@ const RealEstate = () => {
                   <img 
                     src={house.images[0]} 
                     alt={house.title} 
+                    loading="lazy"
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
                 ) : (
@@ -265,8 +302,7 @@ const RealEstate = () => {
               {/* --- KAPCSOLAT GOMBOK --- */}
               <div className="mt-8 pt-6 border-t border-gray-100 relative">
                  
-                 {/* 1. VERZIÓ: MOBILON (Látszik: block, Gépen: lg:hidden) */}
-                 {/* Ez azonnal hívja a számot */}
+                 {/* MOBIL (Hívás) */}
                  <a 
                     href="tel:+36301234567" 
                     className="lg:hidden block w-full bg-brand hover:bg-brand-dark text-white text-center py-4 rounded-xl font-bold text-lg transition-all shadow-lg active:scale-95 flex items-center justify-center gap-2"
@@ -275,8 +311,7 @@ const RealEstate = () => {
                    Hívás Indítása
                  </a>
 
-                 {/* 2. VERZIÓ: ASZTALI GÉPEN (Rejtett: hidden, Gépen: lg:block) */}
-                 {/* Ez feldobja a kis ablakot */}
+                 {/* DESKTOP (Popup) */}
                  <button 
                     onClick={() => setShowContactPopup(!showContactPopup)}
                     className="hidden lg:flex w-full bg-brand hover:bg-brand-dark text-white py-4 rounded-xl font-bold text-lg transition-all shadow-lg hover:shadow-brand/30 items-center justify-center gap-2"
@@ -285,12 +320,11 @@ const RealEstate = () => {
                    Kapcsolatfelvétel
                  </button>
 
-                 {/* A KIS ABLAK (POPUP) - Csak Desktopon */}
+                 {/* POPUP ABLAK */}
                  {showContactPopup && (
                    <div className="absolute bottom-full left-0 w-full mb-4 bg-white rounded-xl shadow-2xl border border-gray-100 p-4 animate-in fade-in slide-in-from-bottom-2 z-20">
                       <h5 className="font-bold text-gray-900 mb-3">Elérhetőségeink:</h5>
                       
-                      {/* Telefonszám sor */}
                       <div className="flex items-center justify-between bg-gray-50 p-3 rounded-lg mb-2 group hover:bg-gray-100 transition-colors">
                         <div className="flex items-center gap-3 text-gray-700 font-medium">
                           <Phone size={18} className="text-brand" />
@@ -305,7 +339,6 @@ const RealEstate = () => {
                         </button>
                       </div>
 
-                      {/* Email sor */}
                       <div className="flex items-center justify-between bg-gray-50 p-3 rounded-lg group hover:bg-gray-100 transition-colors">
                         <div className="flex items-center gap-3 text-gray-700 font-medium">
                           <Mail size={18} className="text-brand" />
@@ -320,7 +353,6 @@ const RealEstate = () => {
                         </button>
                       </div>
                       
-                      {/* Kis nyíl lefelé */}
                       <div className="absolute bottom-[-8px] left-1/2 -translate-x-1/2 w-4 h-4 bg-white border-r border-b border-gray-100 transform rotate-45"></div>
                    </div>
                  )}
