@@ -82,16 +82,16 @@ const Footer = () => {
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
                 <MapPin className="text-brand shrink-0" />
-                <span className="text-gray-400">4000 Debrecen,<br />Piac utca 1. (Iroda)</span>
+                <span className="text-gray-400">4130 Derecske,<br />Hajdú-Bihar Vármegye (Iroda)</span>
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="text-brand shrink-0" />
                 <a 
-                  href="tel:+36301234567" 
+                  href="tel:+36309150429" 
                   onClick={handlePhoneClick}
                   className="text-gray-400 hover:text-white transition-colors cursor-pointer"
                 >
-                  +36 30 123 4567
+                  +36 30 915 0429
                 </a>
               </li>
               <li className="flex items-center gap-3">

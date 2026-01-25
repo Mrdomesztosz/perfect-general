@@ -25,7 +25,6 @@ const RealEstate = () => {
         rooms: "Nappali + 3 szoba", 
         extras: ["Azonnal költözhető", "Padlófűtés", "Klíma", "Zárt parkoló"] 
       },
-      // KÉPEK ELÉRÉSE (A mappa neve: derecske_tarsashaz1)
       images: [
         "/ingatlanok/derecske_tarsashaz1/Derecske_Erkely.jpg",
         "/ingatlanok/derecske_tarsashaz1/Derecske_nappali1.jpg", 
@@ -37,7 +36,6 @@ const RealEstate = () => {
         "/ingatlanok/derecske_tarsashaz1/Derecske_szoba2.jpg",
         "/ingatlanok/derecske_tarsashaz1/Derecske_szoba3.jpg",
         "/ingatlanok/derecske_tarsashaz1/Derecske_WC.jpg",
- 
       ],
       description: `
         Eladó Derecskén egy első emeleti, 77 m²-es, nappali + 3 szobás új építésű lakás.
@@ -65,18 +63,16 @@ const RealEstate = () => {
     // --- MÁSODIK HÁZ: HAJDÚSZOBOSZLÓ ---
     {
       id: 2,
-      status: "ELADÓ", // Most már ez is eladó
+      status: "ELADÓ",
       statusColor: "bg-brand",
       title: "Modern Sorházi Otthon",
       price: "99 500 000 Ft",
       location: "Hajdúszoboszló, Központ",
       specs: { 
-        area: "103 m²", // Hasznos alapterület
+        area: "103 m²", 
         rooms: "Nappali + 2 szoba", 
         extras: ["Új építés (2025)", "Hőszivattyú", "Garázs", "Saját kert"] 
       },
-      // KÉPEK ELÉRÉSE (A mappa neve: hajduszoboszlo_sorhaz)
-      // Ide másold majd be a képeket 1.jpg, 2.jpg... néven
       images: [
         "/ingatlanok/hajduszoboszlo_sorhaz1/haz1.jpg",
         "/ingatlanok/hajduszoboszlo_sorhaz1/haz2.jpg",
@@ -107,7 +103,52 @@ const RealEstate = () => {
         
         Kiváló ár-érték arány, rugalmas fizetési feltételek. Ne maradjon le róla!
       `
+    },
+
+    {
+      id: 3, // JAVÍTVA: Átírtam 3-asra, hogy ne akadjon össze a 2-essel
+      status: "ELADÓ",
+      statusColor: "bg-brand",
+      title: "Modern Sorházi Otthon",
+      price: "98 000 000 Ft",
+      location: "Hajdúszoboszló, Központ",
+      specs: { 
+        area: "87 m²",
+        rooms: "Nappali + 2 szoba", 
+        extras: ["Új építés (2025)", "Hőszivattyú", "Garázs", "Saját kert"] 
+      },
+      images: [
+        "/ingatlanok/hajduszoboszlo_sorhaz1/haz1.jpg",
+        "/ingatlanok/hajduszoboszlo_sorhaz1/haz2.jpg",
+        "/ingatlanok/hajduszoboszlo_sorhaz1/haz3.jpg",
+        "/ingatlanok/hajduszoboszlo_sorhaz1/haz4.jpg",
+        "/ingatlanok/hajduszoboszlo_sorhaz1/haz5.jpg", 
+      ], 
+      description: `
+        Hajdúszoboszló szívében, ugyanakkor nyugodt, csendes környezetben kínálunk eladásra egy új építésű, prémium kivitelezésű sorházi otthont.
+        
+        A 2025-ös átadású ingatlan modern technológiával, Ytong téglából épül, betoncserepes tetővel és 3 rétegű hővisszaverős nyílászárókkal.
+
+        Méretek és Elosztás:
+        - Teljes hasznos alapterület: 87,06 m²
+        - Ebből lakótér: 62,94 m²
+        - Amerikai konyhás nappali
+        - 2 hálószoba
+        - 2 fürdőszoba/WC
+        - Saját garázs
+        - Nagy méretű saját kert
+
+        Műszaki tartalom és Extrák:
+        - Energetikai besorolás: A+ (Fenntartható otthon)
+        - Fűtés: Hőszivattyús rendszer + Padlófűtés
+        - Hűtés: Saját split klíma (hűtő-fűtő)
+        - Parkolás: Garázsban
+        - Kilátás: Udvari
+        
+        Kiváló ár-érték arány, rugalmas fizetési feltételek. Ne maradjon le róla!
+      `
     }
+    
   ];
 
   // --- FUNKCIÓK ---
@@ -115,7 +156,7 @@ const RealEstate = () => {
   const openModal = (house) => {
     setSelectedHouse(house);
     setCurrentImageIndex(0); 
-    setShowContactPopup(false); // Reseteljük a popupot nyitáskor
+    setShowContactPopup(false); 
     document.body.style.overflow = 'hidden'; 
   };
 
@@ -138,11 +179,10 @@ const RealEstate = () => {
     }
   };
 
-  // MÁSOLÁS FUNKCIÓ (Desktop)
   const copyToClipboard = (text, type) => {
     navigator.clipboard.writeText(text);
     setCopiedState(type);
-    setTimeout(() => setCopiedState(null), 2000); // 2 mp múlva visszaáll az ikon
+    setTimeout(() => setCopiedState(null), 2000); 
   };
 
   return (
@@ -155,8 +195,8 @@ const RealEstate = () => {
           <p className="mt-4 text-gray-600">Saját kivitelezésű, minőségi otthonok közvetlenül tőlünk.</p>
         </div>
 
-        {/* LISTA */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        {/* JAVÍTÁS ITT: lg:grid-cols-3 és max-w-7xl */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
           {houses.map((house) => (
             <div 
               key={house.id} 
@@ -188,7 +228,7 @@ const RealEstate = () => {
                   <MapPin size={16} />
                   {house.location}
                 </div>
-                <h3 className="text-2xl font-bold text-gray-800 mb-2">{house.title}</h3>
+                <h3 className="text-xl font-bold text-gray-800 mb-2">{house.title}</h3>
                 <div className="text-2xl font-bold text-brand mb-6">{house.price}</div>
                 <div className="grid grid-cols-2 gap-4 mb-6 text-gray-600 text-sm">
                   <div className="flex items-center gap-2">
@@ -256,7 +296,7 @@ const RealEstate = () => {
 
               <div className="mb-3 inline-block">
                  <span className={`${selectedHouse.statusColor} text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider`}>
-                    {selectedHouse.status}
+                   {selectedHouse.status}
                  </span>
               </div>
               
@@ -304,8 +344,8 @@ const RealEstate = () => {
                  
                  {/* MOBIL (Hívás) */}
                  <a 
-                    href="tel:+36301234567" 
-                    className="lg:hidden block w-full bg-brand hover:bg-brand-dark text-white text-center py-4 rounded-xl font-bold text-lg transition-all shadow-lg active:scale-95 flex items-center justify-center gap-2"
+                   href="tel:+36309150429" 
+                   className="lg:hidden block w-full bg-brand hover:bg-brand-dark text-white text-center py-4 rounded-xl font-bold text-lg transition-all shadow-lg active:scale-95 flex items-center justify-center gap-2"
                  >
                    <Phone size={20} />
                    Hívás Indítása
@@ -313,8 +353,8 @@ const RealEstate = () => {
 
                  {/* DESKTOP (Popup) */}
                  <button 
-                    onClick={() => setShowContactPopup(!showContactPopup)}
-                    className="hidden lg:flex w-full bg-brand hover:bg-brand-dark text-white py-4 rounded-xl font-bold text-lg transition-all shadow-lg hover:shadow-brand/30 items-center justify-center gap-2"
+                   onClick={() => setShowContactPopup(!showContactPopup)}
+                   className="hidden lg:flex w-full bg-brand hover:bg-brand-dark text-white py-4 rounded-xl font-bold text-lg transition-all shadow-lg hover:shadow-brand/30 items-center justify-center gap-2"
                  >
                    <Mail size={20} />
                    Kapcsolatfelvétel
@@ -328,10 +368,10 @@ const RealEstate = () => {
                       <div className="flex items-center justify-between bg-gray-50 p-3 rounded-lg mb-2 group hover:bg-gray-100 transition-colors">
                         <div className="flex items-center gap-3 text-gray-700 font-medium">
                           <Phone size={18} className="text-brand" />
-                          <span>+36 30 123 4567</span>
+                          <span>+36 30 915 0429</span>
                         </div>
                         <button 
-                          onClick={() => copyToClipboard('+36301234567', 'phone')}
+                          onClick={() => copyToClipboard('+36309150429', 'phone')}
                           className="text-gray-400 hover:text-brand transition-colors p-1"
                           title="Másolás"
                         >

@@ -1,96 +1,146 @@
 'use client';
 
-import React from 'react';
-import { Paintbrush, Building2, CheckCircle, Star, Users, Trophy } from 'lucide-react';
+import React, { useState } from 'react';
+import { 
+  Building2, Factory, Home, Trophy, MapPin, 
+  LayoutDashboard, HardHat, Hotel, ChevronDown, ChevronUp 
+} from 'lucide-react';
 
 const References = () => {
-  const stats = [
-    { label: 'Lefestett falfelület', value: '150.000+', suffix: 'm²', icon: <Paintbrush size={32} /> },
-    { label: 'Sikeres projekt', value: '500+', suffix: 'db', icon: <CheckCircle size={32} /> },
-    { label: 'Szakmai tapasztalat', value: '30', suffix: 'év', icon: <Star size={32} /> },
-    { label: 'Elégedett ügyfél', value: '100%', suffix: '', icon: <Users size={32} /> },
+  const [filter, setFilter] = useState('all');
+  const [showAll, setShowAll] = useState(false);
+
+  const categories = [
+    { id: 'all', label: 'Összes Projekt' },
+    { id: 'ipari', label: 'Ipari & Gyártás' },
+    { id: 'hotel', label: 'Hotel & Lakópark' },
+    { id: 'kozulet', label: 'Közület & Iroda' },
   ];
 
-  const partners = [
-    { 
-      name: 'LEGO Gyár', 
-      location: 'Nyíregyháza', 
-      desc: 'Ipari festési munkálatok és karbantartás',
-      icon: <Building2 className="text-brand" size={40} />
-    },
-    { 
-      name: 'Luxus Apartmanok', 
-      location: 'Balatonkense', 
-      desc: 'Teljeskörű belső festés és dekorációs munkák',
-      icon: <Star className="text-brand" size={40} />
-    },
-    { 
-      name: 'Társasházak', 
-      location: 'Derecske & Debrecen', 
-      desc: 'Saját beruházású ingatlanok generálkivitelezése',
-      icon: <Trophy className="text-brand" size={40} />
-    }
+  const projects = [
+    // --- IPARI ---
+    { id: 1, category: 'ipari', city: 'Nyíregyháza', title: 'LEGO Gyár', desc: 'Ipari festési munkálatok és karbantartás', icon: <Factory /> },
+    { id: 2, category: 'ipari', city: 'Debrecen', title: 'Continental', desc: 'Gyártócsarnok felületképzési munkák', icon: <Factory /> },
+    { id: 3, category: 'ipari', city: 'Tatabánya', title: 'Coloplast', desc: 'Gyártócsarnok speciális festése', icon: <Factory /> },
+    { id: 4, category: 'ipari', city: 'Gyermely', title: 'Tésztagyár', desc: 'Új gyártósori csarnok felületképzése', icon: <Factory /> },
+    { id: 5, category: 'ipari', city: 'Sáránd', title: 'Sertéstelep', desc: 'Technológiai korszerűsítés, szakipari munkák', icon: <LayoutDashboard /> },
+    
+    // --- HOTEL & LAKÓPARK ---
+    { id: 6, category: 'hotel', city: 'Tokaj', title: 'Grand Hotel Tokaj', desc: 'Exkluzív belső terek felületképzése', icon: <Hotel /> },
+    { id: 7, category: 'hotel', city: 'Balatonkenese', title: 'Kenese Liget', desc: 'Prémium Resort teljeskörű festése', icon: <Home /> },
+    { id: 8, category: 'hotel', city: 'Csopak', title: 'Residence Lakópark', desc: 'Társasházi lakások festési munkálatai', icon: <Home /> },
+    { id: 9, category: 'hotel', city: 'Debrecen', title: 'Bajcsy Szálloda', desc: 'Szobák és közösségi terek felújítása', icon: <Hotel /> },
+    { id: 10, category: 'hotel', city: 'Dobogókő', title: 'Hotel Cardoner', desc: 'Képzési Központ komplett festése', icon: <Hotel /> },
+    { id: 11, category: 'hotel', city: 'Derecske', title: 'Rózsakert Csárda', desc: 'Éteterem átalakítási és felújítási munkák', icon: <Building2 /> },
+    
+    // --- KÖZÜLET ---
+    { id: 12, category: 'kozulet', city: 'Nyíregyháza', title: 'Atlétikai Centrum', desc: 'Sportlétesítmény speciális bevonatai', icon: <Trophy /> },
+    { id: 13, category: 'kozulet', city: 'Budapest', title: 'BSZL Irodaház', desc: 'Nagyfelületű irodai festés', icon: <Building2 /> },
+    { id: 14, category: 'kozulet', city: 'Derecske', title: 'Bocskai Iskola', desc: 'Intézménybővítés és korszerűsítés', icon: <HardHat /> },
   ];
+
+  // Szűrés és darabolás logika
+  const filteredProjects = filter === 'all' ? projects : projects.filter(p => p.category === filter);
+  const visibleProjects = showAll ? filteredProjects : filteredProjects.slice(0, 6);
 
   return (
     <section 
       id="referenciak" 
-      className="py-20 bg-brand-black text-white scroll-mt-14 lg:scroll-mt-32"
+      className="py-24 bg-brand-black text-white scroll-mt-14 lg:scroll-mt-32 relative z-20 -mt-1 ring-4 ring-brand-black ring-offset-0"
     >
       <div className="container mx-auto px-6">
         
-        {/* CÍM ÉS BEVEZETŐ */}
-        <div className="text-center mb-20">
-          <h2 className="text-4xl font-bold mb-6">
-            Nemcsak Építünk, <span className="text-brand">Alkotunk</span>
-          </h2>
-          <div className="w-24 h-1 bg-brand mx-auto rounded-full mb-8"></div>
-          <p className="text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed">
-            Fő profilunk a <strong className="text-white">professzionális festés</strong>. Legyen szó ipari létesítményről vagy luxuslakásról, a Perfect Generál Kft. évtizedek óta garancia a minőségre.
-          </p>
+        {/* FEJLÉC */}
+        <div className="flex flex-col lg:flex-row justify-between items-end mb-12 gap-8">
+          <div className="max-w-2xl">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
+              Megbízható Partner <br />
+              <span className="text-brand">Ipari Méretekben is</span>
+            </h2>
+            <p className="text-gray-400 text-lg leading-relaxed">
+              Nemcsak lakossági megbízásokat teljesítünk. Büszkék vagyunk rá, hogy Magyarország legnagyobb gyárai, szállodái és közintézményei minket választottak.
+            </p>
+          </div>
+          
+          {/* STATISZTIKA MINI-BOX - JAVÍTVA */}
+          <div className="hidden md:flex bg-gray-900 border border-gray-800 p-6 rounded-2xl gap-8 shadow-lg">
+            <div>
+               {/* Itt javítottuk a számot reálisabbra */}
+               <div className="text-3xl font-bold text-white">500+</div>
+               <div className="text-xs text-gray-500 uppercase tracking-wider mt-1">Sikeres Projekt</div>
+            </div>
+            <div className="w-px bg-gray-800"></div>
+            <div>
+               <div className="text-3xl font-bold text-brand">30</div>
+               <div className="text-xs text-gray-500 uppercase tracking-wider mt-1">Év Tapasztalat</div>
+            </div>
+          </div>
         </div>
 
-        {/* 1. RÉSZ: KIEMELT PARTNEREK */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24">
-          {partners.map((partner, index) => (
-            <div 
-              key={index} 
-              className="bg-white/5 border border-white/10 p-8 rounded-2xl hover:bg-white/10 transition-colors group text-center"
+        {/* SZŰRŐ TABOK */}
+        <div className="flex overflow-x-auto pb-4 gap-2 mb-8 border-b border-gray-800 no-scrollbar">
+          {categories.map((cat) => (
+            <button
+              key={cat.id}
+              onClick={() => { setFilter(cat.id); setShowAll(false); }}
+              className={`px-6 py-3 whitespace-nowrap text-sm font-bold uppercase tracking-wider transition-all border-b-2 ${
+                filter === cat.id
+                  ? 'border-brand text-brand'
+                  : 'border-transparent text-gray-500 hover:text-white hover:border-gray-700'
+              }`}
             >
-              <div className="bg-brand/20 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
-                {partner.icon}
+              {cat.label}
+            </button>
+          ))}
+        </div>
+
+        {/* KÁRTYÁK LISTÁJA */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {visibleProjects.map((project) => (
+            <div 
+              key={project.id}
+              className="group relative bg-gray-900 hover:bg-gray-800 border border-gray-800 hover:border-brand/30 p-8 rounded-2xl transition-all duration-300 hover:-translate-y-1 overflow-hidden shadow-md"
+            >
+              {/* Háttér ikon (Halványítva) */}
+              <div className="absolute -bottom-4 -right-4 text-white/5 group-hover:text-brand/5 transition-colors">
+                {React.cloneElement(project.icon, { size: 100, strokeWidth: 1 })}
               </div>
-              <h3 className="text-2xl font-bold mb-2">{partner.name}</h3>
-              <div className="text-brand text-sm font-bold uppercase tracking-wider mb-4">{partner.location}</div>
-              <p className="text-gray-400">{partner.desc}</p>
+
+              {/* Tartalom */}
+              <div className="relative z-10 flex flex-col h-full">
+                <div className="flex items-center gap-2 mb-4">
+                  <MapPin size={14} className="text-brand" />
+                  <span className="text-gray-400 text-xs font-bold uppercase tracking-wide">
+                    {project.city}
+                  </span>
+                </div>
+
+                <h3 className="text-xl font-bold text-white mb-2 group-hover:text-brand transition-colors">
+                  {project.title}
+                </h3>
+                <p className="text-gray-400 text-sm leading-relaxed">
+                  {project.desc}
+                </p>
+              </div>
             </div>
           ))}
         </div>
 
-        {/* 2. RÉSZ: STATISZTIKA (Számok ereje) */}
-        {/* JAVÍTÁS: p-6 mobilon (hogy több legyen a hely), md:p-12 nagy képernyőn */}
-        <div className="bg-brand rounded-3xl p-6 md:p-12 relative overflow-hidden shadow-2xl">
-          {/* Háttér díszítés */}
-          <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl"></div>
-          <div className="absolute bottom-0 left-0 w-64 h-64 bg-black/10 rounded-full translate-y-1/2 -translate-x-1/2 blur-3xl"></div>
-
-          {/* JAVÍTÁS: grid-cols-1 mobilon (egymás alá kerülnek), sm:grid-cols-2 (tablet), lg:grid-cols-4 (PC) */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 relative z-10">
-            {stats.map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="text-white/80 mb-4 flex justify-center opacity-80">
-                  {stat.icon}
-                </div>
-                <div className="text-4xl lg:text-5xl font-bold mb-2 text-white">
-                  {stat.value}<span className="text-2xl lg:text-3xl text-white/70 ml-1">{stat.suffix}</span>
-                </div>
-                <div className="text-white/80 font-medium uppercase tracking-wide text-sm">
-                  {stat.label}
-                </div>
-              </div>
-            ))}
+        {/* "MUTASS TÖBBET" GOMB */}
+        {filteredProjects.length > 6 && (
+          <div className="mt-12 text-center">
+            <button 
+              onClick={() => setShowAll(!showAll)}
+              className="group inline-flex items-center gap-2 px-8 py-3 bg-gray-900 hover:bg-brand border border-gray-700 hover:border-brand rounded-full text-white font-medium transition-all duration-300"
+            >
+              {showAll ? (
+                <>Kevesebb mutatása <ChevronUp size={18} /></>
+              ) : (
+                <>Összes referencia betöltése <ChevronDown size={18} className="group-hover:translate-y-1 transition-transform" /></>
+              )}
+            </button>
           </div>
-        </div>
+        )}
 
       </div>
     </section>

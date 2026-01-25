@@ -86,12 +86,12 @@ const Header = () => {
             ))}
             
             <a 
-              href="tel:+36301234567"
+              href="tel:+36309150429"
               onClick={handlePhoneClick}
               className="flex items-center gap-2 bg-brand hover:bg-brand-dark text-white px-4 py-2.5 rounded-xl font-bold transition-all shadow-lg hover:shadow-brand/50 cursor-pointer shrink-0"
             >
               <Phone size={18} />
-              <span className="hidden xl:block whitespace-nowrap">+36 30 123 4567</span>
+              <span className="hidden xl:block whitespace-nowrap">+36 30 915 0429</span>
               <span className="block xl:hidden">Hívás</span>
             </a>
           </nav>
@@ -120,7 +120,7 @@ const Header = () => {
             ))}
             
             <a 
-              href="tel:+36301234567"
+              href="tel:+36309150429"
               onClick={handlePhoneClick}
               className="flex justify-center items-center gap-2 bg-brand text-white py-3 rounded-xl font-bold mt-2 cursor-pointer"
             >
