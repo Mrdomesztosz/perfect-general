@@ -85,7 +85,7 @@ const References = () => {
     { id: 8, category: 'hotel', city: 'Csopak', title: 'Residence Lakópark', desc: 'Társasházi lakások festési munkálatai', icon: <Home /> },
     { id: 9, category: 'hotel', city: 'Debrecen', title: 'Bajcsy Szálloda', desc: 'Szobák és közösségi terek felújítása', icon: <Hotel /> },
     { id: 10, category: 'hotel', city: 'Dobogókő', title: 'Hotel Cardoner', desc: 'Képzési Központ komplett festése', icon: <Hotel /> },
-    { id: 11, category: 'hotel', city: 'Derecske', title: 'Almavirág Étterem', desc: 'Éteterem átalakítási és felújítási munkák', icon: <Building2 /> },
+    { id: 11, category: 'hotel', city: 'Derecske', title: 'Almavirág Étterem', desc: 'Étterem átalakítási és felújítási munkák', icon: <Building2 /> },
     { id: 12, category: 'kozulet', city: 'Nyíregyháza', title: 'Atlétikai Centrum', desc: 'Sportlétesítmény speciális bevonatai', icon: <Trophy /> },
     { id: 13, category: 'kozulet', city: 'Budapest', title: 'BSZL Irodaház', desc: 'Nagyfelületű irodai festés', icon: <Building2 /> },
     { id: 14, category: 'kozulet', city: 'Derecske', title: 'Bocskai Iskola', desc: 'Intézménybővítés és korszerűsítés', icon: <HardHat /> },
@@ -99,15 +99,30 @@ const References = () => {
     <section id="referenciak" className="py-24 bg-brand-black text-white scroll-mt-14 lg:scroll-mt-32 relative z-20 -mt-1 ring-4 ring-brand-black ring-offset-0">
       <div className="container mx-auto px-6">
         
-        {/* FEJLÉC */}
-        <div className="mb-12">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
-            Megbízható Partner <br />
-            <span className="text-brand">Ipari Méretekben is</span>
-          </h2>
-          <p className="text-gray-400 text-lg leading-relaxed max-w-2xl">
-            Nemcsak lakossági megbízásokat teljesítünk. Büszkék vagyunk rá, hogy Magyarország legnagyobb gyárai, szállodái és közintézményei minket választottak.
-          </p>
+        {/* FEJLÉC - VISSZATETTÜK A STATISZTIKÁT */}
+        <div className="flex flex-col lg:flex-row justify-between items-end mb-12 gap-8">
+          <div className="max-w-2xl">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
+              Megbízható Partner <br />
+              <span className="text-brand">Ipari Méretekben is</span>
+            </h2>
+            <p className="text-gray-400 text-lg leading-relaxed">
+              Nemcsak lakossági megbízásokat teljesítünk. Büszkék vagyunk rá, hogy Magyarország legnagyobb gyárai, szállodái és közintézményei minket választottak.
+            </p>
+          </div>
+
+          {/* STATISZTIKA MINI-BOX (EZ HIÁNYZOTT) */}
+          <div className="hidden md:flex bg-gray-900 border border-gray-800 p-6 rounded-2xl gap-8 shadow-lg">
+            <div>
+               <div className="text-3xl font-bold text-white">500+</div>
+               <div className="text-xs text-gray-500 uppercase tracking-wider mt-1">Sikeres Projekt</div>
+            </div>
+            <div className="w-px bg-gray-800"></div>
+            <div>
+               <div className="text-3xl font-bold text-brand">30</div>
+               <div className="text-xs text-gray-500 uppercase tracking-wider mt-1">Év Tapasztalat</div>
+            </div>
+          </div>
         </div>
 
         {/* SZŰRŐ TABOK */}
