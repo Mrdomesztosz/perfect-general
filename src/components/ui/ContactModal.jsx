@@ -5,7 +5,7 @@ import { X, Phone, Copy, Check } from 'lucide-react'; // Importáljuk a másolá
 
 const ContactModal = ({ isOpen, onClose, title = "Kapcsolatfelvétel" }) => {
   const [copied, setCopied] = useState(false);
-  const phoneNumber = "+36 30 123 4567"; // A számot változóba tettük
+  const phoneNumber = "+36 30 915 0429"; // A számot változóba tettük
 
   // Ha nincs nyitva, nem renderelünk semmit
   if (!isOpen) return null;

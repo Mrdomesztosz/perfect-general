@@ -1,157 +1,42 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MapPin, Maximize2, X, ChevronLeft, ChevronRight, BedDouble, Expand, CheckCircle, Phone, Mail, Copy, Check } from 'lucide-react';
+import { client, urlFor } from '../../sanity'; // Importáljuk a kapcsolatot
 
 const RealEstate = () => {
+  const [houses, setHouses] = useState([]); // Itt tároljuk a letöltött házakat
+  const [loading, setLoading] = useState(true); // Töltőképernyő állapot
+  
   const [selectedHouse, setSelectedHouse] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  
-  // Állapotok a "Kapcsolat" felugró ablakhoz (Desktop)
   const [showContactPopup, setShowContactPopup] = useState(false);
-  const [copiedState, setCopiedState] = useState(null); // 'phone' vagy 'email'
+  const [copiedState, setCopiedState] = useState(null);
 
-  // --- ADATOK ---
-  const houses = [
-    {
-      id: 1,
-      status: "ELADÓ",
-      statusColor: "bg-brand", 
-      title: "Új Építésű Társasházi Lakás",
-      price: "Kérje árajánlatunkat", 
-      location: "Derecske",
-      specs: { 
-        area: "77 m²", 
-        rooms: "Nappali + 3 szoba", 
-        extras: ["Azonnal költözhető", "Padlófűtés", "Klíma", "Zárt parkoló"] 
-      },
-      images: [
-        "/ingatlanok/derecske_tarsashaz1/Derecske_Erkely.jpg",
-        "/ingatlanok/derecske_tarsashaz1/Derecske_nappali1.jpg", 
-        "/ingatlanok/derecske_tarsashaz1/Derecske_nappali2.jpg",
-        "/ingatlanok/derecske_tarsashaz1/Derecske_nappali3.jpg",
-        "/ingatlanok/derecske_tarsashaz1/Derecske_furdo.jpg",
-        "/ingatlanok/derecske_tarsashaz1/Derecske_furdo2.jpg", 
-        "/ingatlanok/derecske_tarsashaz1/Derecske_szoba1.jpg", 
-        "/ingatlanok/derecske_tarsashaz1/Derecske_szoba2.jpg",
-        "/ingatlanok/derecske_tarsashaz1/Derecske_szoba3.jpg",
-        "/ingatlanok/derecske_tarsashaz1/Derecske_WC.jpg",
-      ],
-      description: `
-        Eladó Derecskén egy első emeleti, 77 m²-es, nappali + 3 szobás új építésű lakás.
-        A 2 emeletes tégla építésű társasházban mindössze 8 lakást alakítottak ki, saját udvarral és zárt parkolóval.
+  // --- ADATOK LETÖLTÉSE A SANITY-BŐL ---
+  useEffect(() => {
+    const fetchHouses = async () => {
+      // Ez a lekérdezés (GROQ) kéri el az adatokat
+      const query = `*[_type == "house"] | order(_createdAt desc)`;
+      const data = await client.fetch(query);
+      setHouses(data);
+      setLoading(false);
+    };
 
-        Főbb jellemzők:
-        - Építés éve: 2023 (Új építés)
-        - Emelet: 1. emelet
-        - Erkély: Van (3,86 m²)
-        - Fűtés: Padlófűtés mindenhol (saját vezérléssel) + törölközőszárító radiátorok
-        - Hűtés: Légkondicionáló
-        - Nyílászárók: Korszerű műanyag
-        
-        Helyiségek:
-        - Amerikai nappali-konyha-étkező
-        - 3 különnyíló, laminált parkettás szoba
-        - Fürdőszoba és külön WC
-        - Előszoba
-        - Erkély
+    fetchHouses();
+  }, []);
 
-        Az ingatlan rendkívül jó tájolású és elosztású, azonnal költözhető!
-        Lakáshitel és CSOK Plusz igénylésére is alkalmas.
-      `
-    },
-    // --- MÁSODIK HÁZ: HAJDÚSZOBOSZLÓ ---
-    {
-      id: 2,
-      status: "ELADÓ",
-      statusColor: "bg-brand",
-      title: "Modern Sorházi Otthon",
-      price: "99 500 000 Ft",
-      location: "Hajdúszoboszló, Központ",
-      specs: { 
-        area: "103 m²", 
-        rooms: "Nappali + 2 szoba", 
-        extras: ["Új építés (2025)", "Hőszivattyú", "Garázs", "Saját kert"] 
-      },
-      images: [
-        "/ingatlanok/hajduszoboszlo_sorhaz1/haz1.jpg",
-        "/ingatlanok/hajduszoboszlo_sorhaz1/haz2.jpg",
-        "/ingatlanok/hajduszoboszlo_sorhaz1/haz3.jpg",
-        "/ingatlanok/hajduszoboszlo_sorhaz1/haz4.jpg",
-        "/ingatlanok/hajduszoboszlo_sorhaz1/haz5.jpg", 
-      ], 
-      description: `
-        Hajdúszoboszló szívében, ugyanakkor nyugodt, csendes környezetben kínálunk eladásra egy új építésű, prémium kivitelezésű sorházi otthont.
-        
-        A 2025-ös átadású ingatlan modern technológiával, Ytong téglából épül, betoncserepes tetővel és 3 rétegű hővisszaverős nyílászárókkal.
+  // --- SEGÉDFÜGGVÉNYEK ---
 
-        Méretek és Elosztás:
-        - Teljes hasznos alapterület: 102,96 m²
-        - Ebből lakótér: 80,13 m²
-        - Amerikai konyhás nappali
-        - 2 hálószoba
-        - 2 fürdőszoba/WC
-        - Saját garázs
-        - Saját kert
-
-        Műszaki tartalom és Extrák:
-        - Energetikai besorolás: A+ (Fenntartható otthon)
-        - Fűtés: Hőszivattyús rendszer + Padlófűtés
-        - Hűtés: Saját split klíma (hűtő-fűtő)
-        - Parkolás: Garázsban
-        - Kilátás: Udvari
-        
-        Kiváló ár-érték arány, rugalmas fizetési feltételek. Ne maradjon le róla!
-      `
-    },
-
-    {
-      id: 3, // JAVÍTVA: Átírtam 3-asra, hogy ne akadjon össze a 2-essel
-      status: "ELADÓ",
-      statusColor: "bg-brand",
-      title: "Modern Sorházi Otthon",
-      price: "98 000 000 Ft",
-      location: "Hajdúszoboszló, Központ",
-      specs: { 
-        area: "87 m²",
-        rooms: "Nappali + 2 szoba", 
-        extras: ["Új építés (2025)", "Hőszivattyú", "Garázs", "Saját kert"] 
-      },
-      images: [
-        "/ingatlanok/hajduszoboszlo_sorhaz1/haz1.jpg",
-        "/ingatlanok/hajduszoboszlo_sorhaz1/haz2.jpg",
-        "/ingatlanok/hajduszoboszlo_sorhaz1/haz3.jpg",
-        "/ingatlanok/hajduszoboszlo_sorhaz1/haz4.jpg",
-        "/ingatlanok/hajduszoboszlo_sorhaz1/haz5.jpg", 
-      ], 
-      description: `
-        Hajdúszoboszló szívében, ugyanakkor nyugodt, csendes környezetben kínálunk eladásra egy új építésű, prémium kivitelezésű sorházi otthont.
-        
-        A 2025-ös átadású ingatlan modern technológiával, Ytong téglából épül, betoncserepes tetővel és 3 rétegű hővisszaverős nyílászárókkal.
-
-        Méretek és Elosztás:
-        - Teljes hasznos alapterület: 87,06 m²
-        - Ebből lakótér: 62,94 m²
-        - Amerikai konyhás nappali
-        - 2 hálószoba
-        - 2 fürdőszoba/WC
-        - Saját garázs
-        - Nagy méretű saját kert
-
-        Műszaki tartalom és Extrák:
-        - Energetikai besorolás: A+ (Fenntartható otthon)
-        - Fűtés: Hőszivattyús rendszer + Padlófűtés
-        - Hűtés: Saját split klíma (hűtő-fűtő)
-        - Parkolás: Garázsban
-        - Kilátás: Udvari
-        
-        Kiváló ár-érték arány, rugalmas fizetési feltételek. Ne maradjon le róla!
-      `
+  // Státusz színek kezelése
+  const getStatusColor = (status) => {
+    switch (status) {
+      case 'ELADÓ': return 'bg-brand';
+      case 'ELKELVE': return 'bg-red-500';
+      case 'TERVEZÉS ALATT': return 'bg-yellow-500';
+      default: return 'bg-gray-500';
     }
-    
-  ];
-
-  // --- FUNKCIÓK ---
+  };
 
   const openModal = (house) => {
     setSelectedHouse(house);
@@ -167,14 +52,14 @@ const RealEstate = () => {
 
   const nextImage = (e) => {
     e.stopPropagation();
-    if (selectedHouse) {
+    if (selectedHouse?.images) {
       setCurrentImageIndex((prev) => (prev === selectedHouse.images.length - 1 ? 0 : prev + 1));
     }
   };
 
   const prevImage = (e) => {
     e.stopPropagation();
-    if (selectedHouse) {
+    if (selectedHouse?.images) {
       setCurrentImageIndex((prev) => (prev === 0 ? selectedHouse.images.length - 1 : prev - 1));
     }
   };
@@ -195,67 +80,91 @@ const RealEstate = () => {
           <p className="mt-4 text-gray-600">Saját kivitelezésű, minőségi otthonok közvetlenül tőlünk.</p>
         </div>
 
-        {/* JAVÍTÁS ITT: lg:grid-cols-3 és max-w-7xl */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-          {houses.map((house) => (
-            <div 
-              key={house.id} 
-              onClick={() => openModal(house)}
-              className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 group cursor-pointer border border-gray-100 flex flex-col"
-            >
-              <div className="relative h-72 overflow-hidden bg-gray-200">
-                {house.images.length > 0 ? (
-                  <img 
-                    src={house.images[0]} 
-                    alt={house.title} 
-                    loading="lazy"
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center text-gray-400">Nincs kép</div>
-                )}
-                <div className={`absolute top-4 right-4 ${house.statusColor} text-white px-3 py-1 rounded-full text-sm font-bold shadow-md`}>
-                  {house.status}
-                </div>
-                <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <div className="bg-white/90 p-3 rounded-full text-brand-black shadow-lg transform scale-0 group-hover:scale-100 transition-transform duration-300">
-                    <Maximize2 size={24} />
+        {/* TÖLTŐKÉPERNYŐ (Amíg az adat megérkezik) */}
+        {loading && (
+          <div className="text-center py-20">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand mx-auto"></div>
+            <p className="mt-4 text-gray-500">Ingatlanok betöltése...</p>
+          </div>
+        )}
+
+        {/* LISTA */}
+        {!loading && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+            {houses.map((house) => (
+              <div 
+                key={house._id} // Sanity _id-t használunk
+                onClick={() => openModal(house)}
+                className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 group cursor-pointer border border-gray-100 flex flex-col"
+              >
+                <div className="relative h-72 overflow-hidden bg-gray-200">
+                  {house.images && house.images.length > 0 ? (
+                    <img 
+                      src={urlFor(house.images[0]).url()} // Sanity kép konvertálása URL-re
+                      alt={house.title} 
+                      loading="lazy"
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-gray-400">Nincs kép</div>
+                  )}
+                  
+                  {/* Státusz címke */}
+                  {house.status && (
+                    <div className={`absolute top-4 right-4 ${getStatusColor(house.status)} text-white px-3 py-1 rounded-full text-sm font-bold shadow-md`}>
+                      {house.status}
+                    </div>
+                  )}
+
+                  <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <div className="bg-white/90 p-3 rounded-full text-brand-black shadow-lg transform scale-0 group-hover:scale-100 transition-transform duration-300">
+                      <Maximize2 size={24} />
+                    </div>
                   </div>
+                </div>
+
+                <div className="p-8 flex flex-col flex-grow">
+                  <div className="flex items-center gap-2 text-gray-500 text-sm mb-3">
+                    <MapPin size={16} />
+                    {house.location}
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-800 mb-2">{house.title}</h3>
+                  <div className="text-2xl font-bold text-brand mb-6">{house.price}</div>
+                  
+                  {/* Specifikációk */}
+                  {house.specs && (
+                    <div className="grid grid-cols-2 gap-4 mb-6 text-gray-600 text-sm">
+                      <div className="flex items-center gap-2">
+                        <Expand size={18} className="text-brand" />
+                        {house.specs.area || '-'}
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <BedDouble size={18} className="text-brand" />
+                        {house.specs.rooms || '-'}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Extrák (első 3) */}
+                  <div className="flex flex-wrap gap-2 mt-auto pt-6 border-t border-gray-100">
+                    {house.extras && house.extras.slice(0, 3).map((extra, idx) => (
+                      <span key={idx} className="bg-gray-100 text-gray-600 px-3 py-1 rounded-lg text-xs font-medium">{extra}</span>
+                    ))}
+                    {house.extras && house.extras.length > 3 && <span className="bg-gray-100 text-gray-600 px-3 py-1 rounded-lg text-xs font-medium">+</span>}
+                  </div>
+                  
+                  <button className="w-full mt-6 bg-brand-black text-white py-3 rounded-xl font-bold hover:bg-brand transition-colors">
+                    Részletek és Képek
+                  </button>
                 </div>
               </div>
-              <div className="p-8 flex flex-col flex-grow">
-                <div className="flex items-center gap-2 text-gray-500 text-sm mb-3">
-                  <MapPin size={16} />
-                  {house.location}
-                </div>
-                <h3 className="text-xl font-bold text-gray-800 mb-2">{house.title}</h3>
-                <div className="text-2xl font-bold text-brand mb-6">{house.price}</div>
-                <div className="grid grid-cols-2 gap-4 mb-6 text-gray-600 text-sm">
-                  <div className="flex items-center gap-2">
-                    <Expand size={18} className="text-brand" />
-                    {house.specs.area}
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <BedDouble size={18} className="text-brand" />
-                    {house.specs.rooms}
-                  </div>
-                </div>
-                <div className="flex flex-wrap gap-2 mt-auto pt-6 border-t border-gray-100">
-                  {house.specs.extras.slice(0, 3).map((extra, idx) => (
-                    <span key={idx} className="bg-gray-100 text-gray-600 px-3 py-1 rounded-lg text-xs font-medium">{extra}</span>
-                  ))}
-                  {house.specs.extras.length > 3 && <span className="bg-gray-100 text-gray-600 px-3 py-1 rounded-lg text-xs font-medium">+</span>}
-                </div>
-                <button className="w-full mt-6 bg-brand-black text-white py-3 rounded-xl font-bold hover:bg-brand transition-colors">
-                  Részletek és Képek
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
+
       </div>
 
-      {/* --- MODAL --- */}
+      {/* --- MODAL (FELUGRÓ ABLAK) --- */}
       {selectedHouse && (
         <div 
           className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/95 backdrop-blur-md"
@@ -268,12 +177,17 @@ const RealEstate = () => {
             
             {/* BAL OLDAL: GALÉRIA */}
             <div className="lg:w-2/3 bg-black relative flex items-center justify-center h-[40vh] lg:h-full group">
-              <img 
-                src={selectedHouse.images[currentImageIndex]} 
-                alt="Galéria" 
-                className="max-h-full max-w-full object-contain"
-              />
-              {selectedHouse.images.length > 1 && (
+              {selectedHouse.images && selectedHouse.images.length > 0 ? (
+                <img 
+                  src={urlFor(selectedHouse.images[currentImageIndex]).url()} 
+                  alt="Galéria" 
+                  className="max-h-full max-w-full object-contain"
+                />
+              ) : (
+                <div className="text-white">Nincs feltöltött kép</div>
+              )}
+
+              {selectedHouse.images && selectedHouse.images.length > 1 && (
                 <>
                   <button onClick={prevImage} className="absolute left-4 bg-white/10 hover:bg-white/20 p-3 rounded-full text-white transition-all backdrop-blur-md hover:scale-110">
                     <ChevronLeft size={32} />
@@ -283,9 +197,12 @@ const RealEstate = () => {
                   </button>
                 </>
               )}
-              <div className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-black/60 px-4 py-2 rounded-full text-white text-sm font-medium backdrop-blur-sm border border-white/10">
-                {currentImageIndex + 1} / {selectedHouse.images.length}
-              </div>
+              
+              {selectedHouse.images && (
+                <div className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-black/60 px-4 py-2 rounded-full text-white text-sm font-medium backdrop-blur-sm border border-white/10">
+                  {currentImageIndex + 1} / {selectedHouse.images.length}
+                </div>
+              )}
             </div>
 
             {/* JOBB OLDAL: LEÍRÁS */}
@@ -295,7 +212,7 @@ const RealEstate = () => {
               </button>
 
               <div className="mb-3 inline-block">
-                 <span className={`${selectedHouse.statusColor} text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider`}>
+                 <span className={`${getStatusColor(selectedHouse.status)} text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider`}>
                    {selectedHouse.status}
                  </span>
               </div>
@@ -314,15 +231,20 @@ const RealEstate = () => {
                 <div>
                   <h4 className="font-bold text-gray-900 mb-4 text-lg">Ingatlan jellemzők</h4>
                   <div className="grid grid-cols-2 gap-y-4 gap-x-2 text-gray-700">
-                    <div className="flex items-center gap-2 bg-gray-50 p-2 rounded-lg">
-                      <Expand size={20} className="text-brand" />
-                      <span className="font-medium">{selectedHouse.specs.area}</span>
-                    </div>
-                    <div className="flex items-center gap-2 bg-gray-50 p-2 rounded-lg">
-                      <BedDouble size={20} className="text-brand" />
-                      <span className="font-medium">{selectedHouse.specs.rooms}</span>
-                    </div>
-                    {selectedHouse.specs.extras.map((extra, idx) => (
+                    {selectedHouse.specs && (
+                      <>
+                        <div className="flex items-center gap-2 bg-gray-50 p-2 rounded-lg">
+                          <Expand size={20} className="text-brand" />
+                          <span className="font-medium">{selectedHouse.specs.area || '-'}</span>
+                        </div>
+                        <div className="flex items-center gap-2 bg-gray-50 p-2 rounded-lg">
+                          <BedDouble size={20} className="text-brand" />
+                          <span className="font-medium">{selectedHouse.specs.rooms || '-'}</span>
+                        </div>
+                      </>
+                    )}
+                    
+                    {selectedHouse.extras && selectedHouse.extras.map((extra, idx) => (
                       <div key={idx} className="flex items-center gap-2 col-span-2">
                         <CheckCircle size={18} className="text-brand shrink-0" />
                         <span>{extra}</span>
@@ -382,10 +304,10 @@ const RealEstate = () => {
                       <div className="flex items-center justify-between bg-gray-50 p-3 rounded-lg group hover:bg-gray-100 transition-colors">
                         <div className="flex items-center gap-3 text-gray-700 font-medium">
                           <Mail size={18} className="text-brand" />
-                          <span>info@perfectgeneral.hu</span>
+                          <span>perfectgeneralkft@gmail.com</span>
                         </div>
                         <button 
-                          onClick={() => copyToClipboard('info@perfectgeneral.hu', 'email')}
+                          onClick={() => copyToClipboard('perfectgeneralkft@gmail.com', 'email')}
                           className="text-gray-400 hover:text-brand transition-colors p-1"
                           title="Másolás"
                         >
