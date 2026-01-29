@@ -35,7 +35,7 @@ const Hero = () => {
         
         {/* --- ITT A MÓDOSÍTOTT SZÖVEG --- */}
         <p className="text-lg md:text-2xl mb-10 text-gray-200 max-w-4xl mx-auto font-light">
-          A Perfect General saját tulajdonú ingatlanfejlesztési Hajdú-Biharban, professzionális festés országosan. 
+          A Perfect Generál saját tulajdonú ingatlanfejlesztései Hajdú-Biharban, professzionális festés országosan. 
           Derecskei központtal, de határok nélkül dolgozunk: Budapesttől a Balatonig, bárhol, ahol a minőség számít.
         </p>
         {/* --- MÓDOSÍTÁS VÉGE --- */}
