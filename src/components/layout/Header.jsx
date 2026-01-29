@@ -54,7 +54,7 @@ const Header = () => {
             <div className={`relative w-14 h-14 lg:w-28 lg:h-28 bg-white rounded-full overflow-hidden shadow-lg border-2 border-transparent group-hover:border-brand transition-all duration-300 ${isScrolled ? 'lg:w-20 lg:h-20' : ''} `}>
               <Image 
                 src="/ujlogo.jpg" // <--- ITT A CSERE
-                alt="Perfect Generál Logo" 
+                alt="Perfect Generál Kft. logó" 
                 fill 
                 className="object-contain scale-110 -ml-0 -mt-0.5 lg:-ml-0 lg:-mt-0.6"
               />
