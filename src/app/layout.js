@@ -14,26 +14,31 @@ const geistMono = Geist_Mono({
 });
 
 // ITT A FELTUNINGOLT METADATA 🚀
+// MODOSÍTOTT METADATA (Országos fókusz + Festés) 🎨🌍
 export const metadata = {
-  metadataBase: new URL('https://perfectgeneral.hu'), // Ez segít a Google-nek azonosítani a domaint
+  metadataBase: new URL('https://perfectgeneral.hu'),
   title: {
-    default: 'Perfect General | Generálkivitelezés és Felújítás',
-    template: '%s | Perfect General'
+    default: 'Perfect Generál Kft. | Ipari Festés, Szobafestés és Lakásfelújítás',
+    template: '%s | Perfect Generál Kft.'
   },
-  description: 'Professzionális generálkivitelezés, ipari festés, lakásfelújítás és építőipari munkák 30 év tapasztalattal. Perfect General - Minőség garanciával Debrecenben és országosan.',
-  keywords: ['generálkivitelezés', 'lakásfelújítás', 'ipari festés', 'szobafestés', 'Perfect General', 'építőipar', 'Debrecen', 'eladó ház', 'csarnok festés'],
+  description: 'Perfect Generál Kft. - Professzionális ipari festés, csarnokfestés, szobafestés és teljes körű lakásfelújítás. Megbízható szakemberek, 30 év tapasztalat országosan.',
+  keywords: ['ipari festés', 'szobafestés', 'lakásfelújítás', 'Perfect Generál Kft.', 'csarnokfestés', 'gipszkartonozás', 'országos kivitelezés', 'eladó ház', 'hőszigetelés', 'festő vállalkozás'],
   
-  // Ez felel azért, hogy ha megosztod Facebookon/Messengeren, szép kártya legyen képpel:
+  icons: {
+    icon: '/ujlogo.jpg',      // Ellenőrizd: ha a képed neve más, írd át! (pl. /icon.png)
+    shortcut: '/ujlogo.jpg',
+    apple: '/ujlogo.jpg',     // Ez jelenik meg iPhone-on és iPaden
+  },
+
   openGraph: {
-    title: 'Perfect General - Megbízható Építőipari Partner',
-    description: '30 év tapasztalat, 500+ sikeres projekt. Kérjen ajánlatot még ma!',
+    title: 'Perfect Generál Kft. - Ipari Festés és Felújítás Országosan',
+    description: '30 év tapasztalat ipari festésben és felújításban. Minőség garanciával az egész ország területén. Kérjen ajánlatot!',
     url: 'https://perfectgeneral.hu',
-    siteName: 'Perfect General',
+    siteName: 'Perfect Generál Kft.',
     locale: 'hu_HU',
     type: 'website',
   },
   
-  // Ez a robotoknak szól:
   robots: {
     index: true,
     follow: true,
