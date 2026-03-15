@@ -107,9 +107,10 @@ const RealEstate = () => {
           <p className="mt-4 text-gray-600">Saját kivitelezésű, minőségi otthonok közvetlenül tőlünk.</p>
         </div>
 
+        
         {/* TÖLTŐKÉPERNYŐ (Amíg az adat megérkezik) */}
         {loading && (
-          <div className="text-center py-20">
+          <div className="text-center py-20 min-h-[600px] flex flex-col items-center justify-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand mx-auto"></div>
             <p className="mt-4 text-gray-500">Ingatlanok betöltése...</p>
           </div>
