@@ -1,12 +1,12 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react'; // HOZZÁADVA: useCallback
 import { MapPin, Maximize2, X, ChevronLeft, ChevronRight, BedDouble, Expand, CheckCircle, Phone, Mail, Copy, Check } from 'lucide-react';
-import { client, urlFor } from '../../sanity'; // Importáljuk a kapcsolatot
+import { client, urlFor } from '../../sanity'; 
 
 const RealEstate = () => {
-  const [houses, setHouses] = useState([]); // Itt tároljuk a letöltött házakat
-  const [loading, setLoading] = useState(true); // Töltőképernyő állapot
+  const [houses, setHouses] = useState([]); 
+  const [loading, setLoading] = useState(true); 
   
   const [selectedHouse, setSelectedHouse] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -16,11 +16,27 @@ const RealEstate = () => {
   // --- ADATOK LETÖLTÉSE A SANITY-BŐL ---
   useEffect(() => {
     const fetchHouses = async () => {
-      // Ez a lekérdezés (GROQ) kéri el az adatokat
       const query = `*[_type == "house"] | order(_createdAt desc)`;
       const data = await client.fetch(query);
       setHouses(data);
       setLoading(false);
+
+      // --- ÚJ RÉSZ: LINK ELLENŐRZÉSE BETÖLTÉSKOR ---
+      // Megnézzük, van-e a linkben ?ingatlan=valami
+      const params = new URLSearchParams(window.location.search);
+      const urlHouseId = params.get('ingatlan');
+      
+      if (urlHouseId) {
+        // Megkeressük a házat az ID alapján a letöltött adatok között
+        const houseToOpen = data.find(h => h._id === urlHouseId);
+        if (houseToOpen) {
+          // Ha megvan, kinyitjuk (fontos: itt nem az openModal-t hívjuk közvetlenül, 
+          // mert az felülírná az URL-t)
+          setSelectedHouse(houseToOpen);
+          setCurrentImageIndex(0); 
+          document.body.style.overflow = 'hidden'; 
+        }
+      }
     };
 
     fetchHouses();
@@ -28,7 +44,6 @@ const RealEstate = () => {
 
   // --- SEGÉDFÜGGVÉNYEK ---
 
-  // Státusz színek kezelése
   const getStatusColor = (status) => {
     switch (status) {
       case 'ELADÓ': return 'bg-brand';
@@ -43,11 +58,21 @@ const RealEstate = () => {
     setCurrentImageIndex(0); 
     setShowContactPopup(false); 
     document.body.style.overflow = 'hidden'; 
+
+    // --- ÚJ RÉSZ: LINK FRISSÍTÉSE ---
+    // Betesszük a linkbe a ház ID-ját újratöltés nélkül
+    const newUrl = `${window.location.pathname}?ingatlan=${house._id}#ingatlanok`;
+    window.history.pushState({ path: newUrl }, '', newUrl);
   };
 
   const closeModal = () => {
     setSelectedHouse(null);
     document.body.style.overflow = 'unset'; 
+
+    // --- ÚJ RÉSZ: LINK VISSZAÁLLÍTÁSA ---
+    // Kivesszük a linkből az ID-t, csak a #ingatlanok marad
+    const newUrl = `${window.location.pathname}#ingatlanok`;
+    window.history.pushState({ path: newUrl }, '', newUrl);
   };
 
   const nextImage = (e) => {
@@ -71,6 +96,8 @@ const RealEstate = () => {
   };
 
   return (
+    // INNENTŐL A RÉGI KÓD (A <section id="ingatlanok"... kezdetű rész érintetlen)
+  
     <section id="ingatlanok" className="py-20 bg-gray-50 scroll-mt-14 lg:scroll-mt-32">
       <div className="container mx-auto px-6">
         
