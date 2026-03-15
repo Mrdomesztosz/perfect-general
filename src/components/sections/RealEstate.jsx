@@ -14,6 +14,7 @@ const RealEstate = () => {
   const [copiedState, setCopiedState] = useState(null);
 
   // --- ADATOK LETÖLTÉSE A SANITY-BŐL ---
+  // --- ADATOK LETÖLTÉSE A SANITY-BŐL ---
   useEffect(() => {
     const fetchHouses = async () => {
       const query = `*[_type == "house"] | order(_createdAt desc)`;
@@ -21,21 +22,36 @@ const RealEstate = () => {
       setHouses(data);
       setLoading(false);
 
-      // --- ÚJ RÉSZ: LINK ELLENŐRZÉSE BETÖLTÉSKOR ---
-      // Megnézzük, van-e a linkben ?ingatlan=valami
+      // 1. FUNKCIÓ: Megnézzük, van-e a linkben ?ingatlan=valami (EZ MARADT A RÉGI)
       const params = new URLSearchParams(window.location.search);
       const urlHouseId = params.get('ingatlan');
       
       if (urlHouseId) {
-        // Megkeressük a házat az ID alapján a letöltött adatok között
         const houseToOpen = data.find(h => h._id === urlHouseId);
         if (houseToOpen) {
-          // Ha megvan, kinyitjuk (fontos: itt nem az openModal-t hívjuk közvetlenül, 
-          // mert az felülírná az URL-t)
           setSelectedHouse(houseToOpen);
           setCurrentImageIndex(0); 
           document.body.style.overflow = 'hidden'; 
         }
+      }
+
+      // 2. FUNKCIÓ: AUTOMATIKUS GÖRGETÉS A SZEKCIÓHOZ (EZ AZ ÚJ RÉSZ)
+      // Ha a link végén #rolunk vagy #szolgaltatasok van
+      if (window.location.hash) {
+        setTimeout(() => {
+          const targetElement = document.querySelector(window.location.hash);
+          if (targetElement) {
+            // Kiszámoljuk a pontos helyet a menüsáv (120px) alatt!
+            const headerOffset = 120; 
+            const elementPosition = targetElement.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+  
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: "smooth"
+            });
+          }
+        }, 300); // Várunk 300ms-t, hogy a házak biztosan megjelenjenek
       }
     };
 
